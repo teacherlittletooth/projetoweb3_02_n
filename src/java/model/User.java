@@ -40,7 +40,9 @@ public class User {
     //toString - método para representação geral do objeto
     @Override
     public String toString() {
-        return "Nome: " + userName + "<br>CPF: " + userCpf;
+        return "Nome: " + userName +
+                "<br>CPF: " + userCpf +
+                "<br>Senha: " + userPass;
     }
     
     //Métodos gerais

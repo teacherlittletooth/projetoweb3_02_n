@@ -3,15 +3,20 @@
     Created on : 27 de abr. de 2023, 19:30:33
     Author     : QI
 --%>
-
+<%@include file="session/verify.jsp" %>
+<%@page import="model.User"%>
+<%
+    User userSession =  (User) session.getAttribute("userNewSession");
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Exames</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <button onclick="window.location.href='session/logout.jsp'">Logout</button>
+        <h1>Bem vindo <%= userSession %></h1>
     </body>
 </html>
