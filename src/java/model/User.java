@@ -40,15 +40,15 @@ public class User {
     //toString - método para representação geral do objeto
     @Override
     public String toString() {
-        return "Nome: " + userName +
+        return "<hr>Nome: " + userName +
                 "<br>CPF: " + userCpf +
                 "<br>Senha: " + userPass;
     }
     
     //Métodos gerais
     public boolean isLogged() {
-        return (this.userName.equals("donini")
-                   && this.userPass.equals("senha1234"));
+        return (this.userName.equals("Prof Davi")
+                   && this.userPass.equals("1234"));
     }
     
 } //Fim da classe

@@ -16,7 +16,16 @@
         <title>Exames</title>
     </head>
     <body>
+        <p>
+        Bem vindo <%= userSession.getUserName() %>
         <button onclick="window.location.href='session/logout.jsp'">Logout</button>
-        <h1>Bem vindo <%= userSession %></h1>
+        </p>
+        <hr>
+        <button onclick="window.location.href='cadastro.jsp'">
+            CADASTRAR
+        </button>
+        <button onclick="window.location.href='lista.jsp'">
+            LISTAR
+        </button>
     </body>
 </html>
