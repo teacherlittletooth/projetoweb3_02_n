@@ -17,7 +17,11 @@
     </head>
     <body>
         <p>
-        Bem vindo <%= userSession.getUserName() %>
+        Bem vindo <%=
+                                (userSession != null)
+                                        ? userSession.getUserName() 
+                                        : "visitante"
+                          %>
         <button onclick="window.location.href='session/logout.jsp'">Logout</button>
         </p>
         <hr>

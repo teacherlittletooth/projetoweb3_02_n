@@ -47,7 +47,7 @@ public class User {
     
     //Métodos gerais
     public boolean isLogged() {
-        return (this.userName.equals("Prof Davi")
+        return (this.userName.equals("user")
                    && this.userPass.equals("1234"));
     }
     

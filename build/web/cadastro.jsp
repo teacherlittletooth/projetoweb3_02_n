@@ -3,7 +3,7 @@
     Created on : 4 de mai. de 2023, 19:55:09
     Author     : QI
 --%>
-
+<%@include file="session/verify.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,7 @@
     <body>
         <h1>Cadastro</h1>
         <hr>
-        <form action="#" method="post">
+        <form action="ExameController" method="post">
             <h2>Novo Exame</h2>
             <input type="text" name="exame" placeholder="Digite o nome do exame" required>
             <br><br>
