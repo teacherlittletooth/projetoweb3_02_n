@@ -6,6 +6,9 @@ public class Exame {
     private double valor;
     private String especialidade;
 
+    public Exame(){
+    }
+    
     public Exame(String tipo, double valor, String especialidade) {
         this.tipo = tipo;
         this.valor = valor;
