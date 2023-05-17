@@ -34,6 +34,8 @@ public class ExameDAO {
         }
     }//Fim do insert
     
+    
+    //Listar os registros do BD
     public ArrayList<Exame> listExame() throws SQLException{
        ArrayList<Exame> list = new ArrayList<>();
        
@@ -56,6 +58,8 @@ public class ExameDAO {
        return list;
     }//Fim do método list
     
+    
+    //Excluir registros do BD
     public void deleteExame(int id) throws SQLException{
         String sql = "delete from exames where cod_exame = " + id;
         
@@ -64,5 +68,53 @@ public class ExameDAO {
         prep.close();
     }
     
+    
+    //Atualizar registros no BD
+    public void updateExame(Exame ex) throws SQLException {
+        //Query genérica
+        String query = "UPDATE exames SET nome = ?, "
+                   + "valor = ?, especialidade = ? "
+                + "WHERE cod_exame = ?";
+        
+        //Preparando a query para ser executada no BD
+        PreparedStatement prep = conn.prepareStatement(query);
+        
+        //Trocando as interrogações por seus respectivos valores
+        prep.setString(1, ex.getTipo());
+        prep.setDouble(2, ex.getValor());
+        prep.setString(3, ex.getEspecialidade());
+        prep.setInt(4, ex.getCodExame());
+        
+        //Executando a query pronta no BD
+        prep.execute();
+        prep.close();
+    }
+    
+    
+    //Selecionar um registro apenas
+    public Exame listOneExame(int i) throws SQLException {
+        //Query para selecionar apenas um registro
+        String query = "SELECT * FROM exames "
+                + "WHERE cod_exame = " + i ;
+        
+        //Preparando a query para executar no BD
+        PreparedStatement prep = conn.prepareStatement(query);
+        //Executando a query e lançando o resultado
+        //no objeto result, da classe ResultSet
+        ResultSet result = prep.executeQuery();
+        
+        //Criando um objeto vazio da classe Exame
+        Exame ex = new Exame();
+        //Caso obtenha algum registro do BD, o objeto "ex"
+        //será preenchido com os respectivos valores
+        if(result.next()){
+            ex.setCodExame(result.getInt("cod_exame"));
+            ex.setTipo(result.getString("nome"));
+            ex.setValor(result.getDouble("valor"));
+            ex.setEspecialidade(result.getString("especialidade"));
+        }
+        //Retornando o objeto da classe Exame
+        return ex;
+    }
     
 }//Fim da classe
