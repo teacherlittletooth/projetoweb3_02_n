@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3307
--- Tempo de geração: 10-Maio-2023 às 02:53
+-- Tempo de geração: 19-Maio-2023 às 02:44
 -- Versão do servidor: 10.4.27-MariaDB
 -- versão do PHP: 8.1.12
 
@@ -23,6 +23,7 @@ SET time_zone = "+00:00";
 
 CREATE DATABASE exames;
 USE exames;
+
 -- --------------------------------------------------------
 
 --
@@ -31,7 +32,7 @@ USE exames;
 
 CREATE TABLE `exames` (
   `cod_exame` int(11) NOT NULL,
-  `nome` varchar(50) NOT NULL,
+  `nome` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `valor` decimal(5,2) NOT NULL,
   `especialidade` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -41,13 +42,12 @@ CREATE TABLE `exames` (
 --
 
 INSERT INTO `exames` (`cod_exame`, `nome`, `valor`, `especialidade`) VALUES
-(1, 'Endoscopia Pulmonar', '185.25', NULL),
-(2, 'Exame de fezes', '30.50', NULL),
-(3, 'Triglicerídeos', '45.99', NULL),
-(4, 'Exame de toque (próstata)', '489.60', NULL),
-(5, 'Exame do exame', '145.30', NULL),
-(6, 'Exame de prÃ³stata', '199.99', 'Neuro'),
-(7, 'Exame da cabeÃ§a', '259.60', 'Dentista');
+(9, 'Arcada dentÃ¡ria', '159.60', 'Dentista'),
+(10, 'Bexiga', '224.50', 'Gastro'),
+(11, 'Vista', '35.40', 'Neuro'),
+(16, 'Fezes', '125.45', 'Dentista'),
+(17, 'Figado', '123.45', 'Gastro'),
+(19, 'Urina', '1.99', 'Dentista');
 
 -- --------------------------------------------------------
 
@@ -96,6 +96,26 @@ CREATE TABLE `telefone` (
   `cod_paciente` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `cod_usuario` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `senha` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Extraindo dados da tabela `usuarios`
+--
+
+INSERT INTO `usuarios` (`cod_usuario`, `nome`, `senha`) VALUES
+(1, 'Bernardo Silva', '1234'),
+(2, 'Joseph Climber', '4321');
+
 --
 -- Índices para tabelas despejadas
 --
@@ -129,6 +149,12 @@ ALTER TABLE `telefone`
   ADD KEY `cod_paciente` (`cod_paciente`);
 
 --
+-- Índices para tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`cod_usuario`);
+
+--
 -- AUTO_INCREMENT de tabelas despejadas
 --
 
@@ -136,7 +162,7 @@ ALTER TABLE `telefone`
 -- AUTO_INCREMENT de tabela `exames`
 --
 ALTER TABLE `exames`
-  MODIFY `cod_exame` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cod_exame` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de tabela `exames_pacientes`
@@ -155,6 +181,12 @@ ALTER TABLE `pacientes`
 --
 ALTER TABLE `telefone`
   MODIFY `cod_telefone` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `cod_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restrições para despejos de tabelas

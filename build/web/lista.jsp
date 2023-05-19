@@ -35,10 +35,10 @@
                     <td><%= item.getValor() %></td>
                     <td><%= item.getEspecialidade() %></td>
                     <td>
-                        <a href="#editar<%= item.getCodExame() %>">🖊</a>
+                        <a href="UpdateExame?cod=<%= item.getCodExame() %>">🖊</a>
                     </td>
                     <td>
-                        <a href="#apagar<%= item.getCodExame() %>">🗑</a>
+                        <a onclick="confirmaDelete(<%= item.getCodExame() %>)">🗑</a>
                     </td>
                 </tr>
             <%
@@ -48,5 +48,15 @@
         </table>
         <hr>
         <a href="home.jsp">Página inicial</a>
+        
+        <script>
+                function confirmaDelete(cod){
+                    if(confirm("Deseja realmente excluir?")) {
+                        window.location.replace("DeleteExame?cod=" + cod);
+                    } else {
+                        alert("Exclusão cancelada!");
+                    }
+                }
+           </script>
     </body>
 </html>

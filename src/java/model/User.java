@@ -1,18 +1,33 @@
 package model;
 
+import java.sql.SQLException;
+
 public class User {
     //Atributos
+    private int userCod;
     private String userName;
     private String userPass;
     private String userCpf;
     
     //Método construtor
+    public User(){}
+    
     public User(String user, String pass) {
         this.userName = user;
         this.userPass = pass;
     }
     
     //Getters & Setters
+
+    public int getUserCod() {
+        return userCod;
+    }
+
+    public void setUserCod(int userCod) {
+        this.userCod = userCod;
+    }
+    
+    
     public String getUserName() {
         return userName;
     }
@@ -46,9 +61,18 @@ public class User {
     }
     
     //Métodos gerais
-    public boolean isLogged() {
-        return (this.userName.equals("user")
-                   && this.userPass.equals("1234"));
+    public boolean isLogged() throws ClassNotFoundException, SQLException {
+        UserDAO udao = new UserDAO();
+        User uBanco = udao.listOneUser(this.userName);
+        
+        if(uBanco.getUserName() != null && uBanco.getUserName().equals(this.userName)){
+            //Aqui, o nome de usuário foi encontrado
+            //e verificamos a senha
+            return (this.userPass.equals(uBanco.getUserPass()));
+        } else {
+            //Aqui, o nome de usuário não foi encontrado
+            return false;
+        }
     }
     
 } //Fim da classe

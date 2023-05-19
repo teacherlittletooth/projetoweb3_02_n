@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,40 +13,47 @@ import model.User;
 
 @WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
 public class LoginController extends HttpServlet {
+
     //Atributos
     private String user;
     private String pass;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         this.user = request.getParameter("user");
         this.pass = request.getParameter("pass");
-        
+
         User userNew = new User(this.user, this.pass);
-        
-        if(userNew.isLogged()) {
-            HttpSession session = request.getSession();
-            session.setAttribute("userNewSession", userNew);
-            request.setAttribute("userNew",  userNew);
-            request.getRequestDispatcher("home.jsp")
-                    .forward(request, response);
-        } else {  
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Exames</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<script>");
-            out.println("alert('Acesso negado');");
-            out.println("window.location.replace('index.jsp');");
-            out.println("</script>");
-            out.println("</body>");
-            out.println("</html>");
+
+        try {
+
+            if (userNew.isLogged()) {
+                HttpSession session = request.getSession();
+                session.setAttribute("userNewSession", userNew);
+                request.setAttribute("userNew", userNew);
+                request.getRequestDispatcher("home.jsp")
+                        .forward(request, response);
+            } else {
+                try (PrintWriter out = response.getWriter()) {
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Exames</title>");
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<script>");
+                    out.println("alert('Acesso negado');");
+                    out.println("window.location.replace('index.jsp');");
+                    out.println("</script>");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
             }
+        } catch (SQLException | ClassNotFoundException erro) {
+            PrintWriter out = response.getWriter();
+            out.print("Ocorreu algum erro :(");
         }
     }
 

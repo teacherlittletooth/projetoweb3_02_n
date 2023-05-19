@@ -13,35 +13,57 @@ import model.ExameDAO;
 
 @WebServlet(name = "ExameController", urlPatterns = {"/ExameController"})
 public class ExameController extends HttpServlet {
+
+    private int cod;
     private String exame;
     private double valor;
     private String especialidade;
-    
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
+        //Verificando a existência de um código
+        if (request.getParameter("cod") != null) {
+            this.cod = Integer.parseInt(request.getParameter("cod"));
+        }
+
         //Recebendo dados do formulário de cadastro
         this.exame = request.getParameter("exame");
         this.valor = Double.parseDouble(request.getParameter("valor"));
         this.especialidade = request.getParameter("especialidade");
-        
-        Exame exame = new Exame(this.exame, this.valor, this.especialidade);
-        
+
         try {
-            ExameDAO exDao = new ExameDAO();
-            exDao.insertExame(exame);
-            response.sendRedirect("home.jsp");
-            
-        } catch(SQLException | ClassNotFoundException erro) {
-        
+            if (request.getParameter("cod") == null) {
+                Exame exame = new Exame(
+                        this.exame,
+                        this.valor,
+                        this.especialidade
+                );
+
+                ExameDAO exDao = new ExameDAO();
+                exDao.insertExame(exame);
+                response.sendRedirect("lista.jsp");
+            } else {
+                Exame exame = new Exame(
+                        this.cod,
+                        this.exame,
+                        this.valor,
+                        this.especialidade
+                );
+
+                ExameDAO exDao = new ExameDAO();
+                exDao.updateExame(exame);
+                response.sendRedirect("lista.jsp");
+            }
+        } catch (SQLException | ClassNotFoundException erro) {
+
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
-                out.println("<title>Exames</title>");            
+                out.println("<title>Exames</title>");
                 out.println("</head>");
                 out.println("<body>");
                 out.println("<h1>Ocorreu um erro :(</h1>");
